@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Form</title>
+  </head>
+  <body>
+    <h1>{{ value.v1 }} + {{ value.v2 }} = {{ value.result }}</h1>
+    {% if value.v1 + value.v2 == value.result %}
+      <h1> YES! <h1>
+    {% else %}
+      <h1> NO! <h1>
+    {% endif %}
+
+    <h3>{{ value.ellapsed }} s<h3>
+  </body>
+</html>
