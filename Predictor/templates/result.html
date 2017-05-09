@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Form</title>
+    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/style.css') }}">
+  </head>
+  <body>
+    <div class="container">
+      <div class="jumbotron col-xs-12">
+        <h1>{{ value.v1 }} + {{ value.v2 }} = {{ value.result }}</h1>
+        {% if value.v1 + value.v2 == value.result %}
+          <h1> YES! <h1>
+        {% else %}
+          <h1> NO! <h1>
+        {% endif %}
+        <h2>Time to calculate:<h2>
+        <h3>{{ value.ellapsed }} s<h3>
+        <h2>Predicted time:<h2>
+        <h3>{{ pred }} s<h3>
+      </div>
+    </div>
+  </body>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</html>
