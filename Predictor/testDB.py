@@ -1,15 +1,26 @@
-from flask import Flask, render_template
-from flask import request, make_response
+#################################################################################
+#                    SUM TIME PREDICTOR FOR TWO NUMBERS                         #
+#################################################################################
+#                         Author: Axel Junestrand                               #
+#################################################################################
+
+import random
+import pymongo
+import numpy as np
+from flask import Flask, render_template, request, make_response, redirect, url_for
 from random import randint
 from time import time
-from humbledb import Mongo, Document
 from sklearn.linear_model import LinearRegression
 from sklearn.externals import joblib
-import numpy as np
+from pymongo import MongoClient
 
-class OP(Document):
-    config_database = 'operation'
-    config_collection = 'add'
+#URI for MongoLab
+#MONGODB_URI = ""
+
+#MongoDB collection
+client = MongoClient(MONGODB_URI)
+db = client.get_default_database()
+collection = db.add
 
 app = Flask(__name__)
 
@@ -19,7 +30,7 @@ clf = joblib.load("classifier.pkl")
 @app.route('/', methods=["GET", "POST"])
 def hello_world():
     if request.method == 'POST':
-        op = OP()
+        op = {}
         op["result"] = int(request.form['value'])
         op["v1"] = int(request.form['v1'])
         op["v2"] = int(request.form['v2'])
@@ -47,8 +58,8 @@ def hello_world():
         #-----------------------------------------------------------------------
         prediction = clf.predict(complexity)[0]
         if int(op["v1"]) + int(op["v2"]) == int(op["result"]):
-            with Mongo:
-                OP.insert(op)
+            #Insert in database
+            collection.insert(op)
             return render_template("result.html", value = op, pred = prediction)
         else:
             op["timestamp"] = float(request.form['timestamp'])
@@ -63,23 +74,22 @@ def hello_world():
 
 @app.route('/list', methods=["GET"])
 def list():
-    with Mongo:
-        ops = OP.find()
-        ss = ""
-        for o in ops:
-            try:
-                ss += str(o["v1"])
-                ss += ";"
-                ss += str(o["v2"])
-                ss += ";"
-                ss += str(o["ellapsed"])
-                ss += "\n"
-            except Exception as e:
-                pass
-        output = make_response(ss)
-        output.headers["Content-Disposition"] = "attachment; filename=export.csv"
-        output.headers["Content-type"] = "text/csv"
-        return output
+    ops = collection.find()
+    ss = ""
+    for o in ops:
+        try:
+            ss += str(o["v1"])
+            ss += ";"
+            ss += str(o["v2"])
+            ss += ";"
+            ss += str(o["ellapsed"])
+            ss += "\n"
+        except Exception as e:
+            pass
+    output = make_response(ss)
+    output.headers["Content-Disposition"] = "attachment; filename=export.csv"
+    output.headers["Content-type"] = "text/csv"
+    return output
 
 if __name__ == "__main__":
     app.run()
