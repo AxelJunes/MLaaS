@@ -10,6 +10,9 @@
 	$ source venv/bin/activate
 - Declare app dependencies:
 	$ pip freeze > requirements.txt
+- Get needed requirements with "pipreqs":
+	$ pip install pipreqs
+	$ pipreqs /path/to/project
 - Edit "requirements.txt" with all the needed requirements and install:
 	$ pip install -r requirements.txt
 - Create and add app to Procfile:
