@@ -30,3 +30,7 @@
 	$ heroku open
 - Check heroku logs:
 	$ heroku logs
+- Add mongoLab as add-on:
+	$ heroku addons:create mongolab
+- Get mongodb uri (Copy the uri into your application):
+	$ heroku config:get MONGODB_URI
