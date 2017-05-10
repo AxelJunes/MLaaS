@@ -1,0 +1,29 @@
+#####################################################
+#       CHEATSHEET FOR DEPLOYING APPS ON HEROKU     #
+#####################################################
+
+- Create project directory
+- Login with Heroku:
+	$ heroku login
+- Activate virtual environment in project directory:
+	$ virtualenv venv
+	$ source venv/bin/activate
+- Declare app dependencies:
+	$ pip freeze > requirements.txt
+- Edit "requirements.txt" with all the needed requirements and install:
+	$ pip install -r requirements.txt
+- Create and add app to Procfile:
+	$ touch Procfile
+	$ web: gunicorn python_file_name:app
+- Deploy on local:
+	$ heroku local web
+- Create app:
+	$ heroku create
+- Add to repo:
+	$ git add .
+	$ git commit -m "Commit"
+	$ git push heroku master
+- Launch app remotely:
+	$ heroku open
+- Check heroku logs:
+	$ heroku logs
