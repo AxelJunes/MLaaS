@@ -18,8 +18,7 @@ db = client.get_default_database()
 collection = db.add
 app = Flask(__name__)
 
-#Array with words that have different complexities (3, 4, 5, 6, 7 or more letters,
-#and uppercase on the first or last letter)
+#Array with words that have different lengths
 words = ["mas", "uno", "pie", "ojo", "ajo", "oca", "sed", "dos",
         "tos", "luz", "voz", "tez", "uva", "pan", "mar", "oso", "ola",
         "sol", "pez", "col", "sal" , "paz", "cal", "rio", "res",
@@ -50,9 +49,9 @@ clf = joblib.load("classifier.pkl")
 @app.route("/", methods=["GET", "POST"])
 def login():
     if request.method == "POST":
-        usuario = request.form["username"]
-        if (usuario == "martins" or usuario == "axel"):
-            return redirect(url_for(".getWord", user = usuario, correct = 0))
+        username = request.form["username"]
+        if (username == "user1" or username == "user2"):
+            return redirect(url_for(".getWord", user = username, correct = 0))
         else:
             return render_template("loginTrain.html")
     if request.method == "GET":
