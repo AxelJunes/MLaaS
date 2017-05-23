@@ -26,7 +26,7 @@ app = Flask(__name__)
 clf = joblib.load("classifier.pkl")
 
 @app.route('/', methods=["GET", "POST"])
-def hello_world():
+def operation():
     if request.method == 'POST':
         op = {}
         op["result"] = int(request.form['value'])
