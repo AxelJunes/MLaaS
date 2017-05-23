@@ -1,0 +1,12 @@
+body {
+  background: url('../img/bg.jpg') no-repeat center center fixed;
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+}
+
+.jumbotron{
+  opacity: 0.9;
+  margin-top: 200px;
+}

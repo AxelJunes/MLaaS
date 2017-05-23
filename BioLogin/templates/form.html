@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Training form</title>
+    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/style.css') }}">
+  </head>
+  <body>
+    <div class="container">
+      <div class="jumbotron col-xs-12">
+        <h2>Write the word displayed on the screen<h2>
+        <form id="target" action="/words" method="post">
+          <div class="form-group">
+            <p>{{ vs.word }}</p>
+            <p><input type = "hidden" name = "user" value = {{vs.username}} /></p>
+            <p><input type = "hidden" name = "word" value = {{vs.word}} /></p>
+            <p><input type = "hidden" name = "timestamp" value = {{vs.timestamp}} /></p>
+            <p><input id="avg" type = "hidden" name = "average" value = {{vs.keystroke}} /></p>
+            <input class="form-control key-input" type = "text" name = "newWord" autofocus>
+          </div>
+        </form>
+
+        {% if correct|int == 1 %}
+          <div class="alert alert-success">
+            <h4><strong>Typing time:</strong> {{ time }} s<h4>
+            <h4><strong>Average keyup/keydown time:</strong> {{ vs.average }} ms<h4>
+          </div>
+        {% endif %}
+
+        {% if vs.ellapsed > 0 %}
+        <div class="alert alert-danger">
+          <h4><strong>Error:</strong> {{vs.ellapsed}} s</h4>
+        </div
+        {% endif %}
+      </div>
+    </div>
+
+  </body>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <script src="{{ url_for('static',filename='js/keystroke.js') }}"></script>
+</html>
